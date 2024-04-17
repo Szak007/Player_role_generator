@@ -1,6 +1,14 @@
+/**@file*/
 
+/*
+Player_role_generator
+*/
+
+//header file import 
 #include "function.h"
 #include "struct.h"
+
+//import library
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,6 +16,7 @@
 #include <map>
 #include <vector>
 
+//Get parameters
 bool pobieranie_parametrow(int num, char* params[], std::string& p_drzewo, std::string& p_dane) {
     std::cout << params[0] << "\n";
     if (num < 5) {
@@ -40,49 +49,7 @@ bool pobieranie_parametrow(int num, char* params[], std::string& p_drzewo, std::
 }
 
 
-//std::map<int, Wezel> wczytaj_drzewo(const std::string& p_drzewo) {
-//    std::map<int, Wezel> drzewo;
-//    std::cout << p_drzewo; //debug
-//    std::ifstream plik(p_drzewo);
-//    int id;
-//    int wartosc;
-//    std::string umiejetnosc;
-//    std::string lewo;
-//    std::string prawo;
-//    char warunek;
-//
-//    while (plik >> id >> umiejetnosc >> warunek >> wartosc >> lewo >> prawo) {
-//        drzewo[id] = { id, umiejetnosc, warunek, wartosc, lewo, prawo };
-//    }
-//    
-//    return drzewo;
-//}
-
-//std::map<int, Wezel> wczytaj_drzewo(const std::string& p_drzewo) {
-//    std::map<int, Wezel> drzewo;
-//    std::ifstream plik(p_drzewo);
-//    std::string linia;
-//
-//    while (getline(plik, linia)) {
-//        std::istringstream iss(linia);
-//        int id;
-//        std::string umiejetnosc, warunek;
-//        int wartosc;
-//        std::string lewo, prawo;
-//
-//        iss >> id;
-//
-//        if (iss >> umiejetnosc >> warunek >> wartosc >> lewo >> prawo) { // Wêze³ decyzyjny
-//            drzewo[id] = Wezel{ id, umiejetnosc, warunek, wartosc, lewo, prawo };
-//        }
-//        else { // Liœæ (pozycja)
-//            drzewo[id] = Wezel{ id, umiejetnosc, "", 0, "", "" };
-//        }
-//    }
-//
-//    return drzewo;
-//}
-
+//Load data from drzewo file
 std::map<int, Wezel> wczytaj_drzewo(const std::string& p_drzewo) {
     std::map<int, Wezel> drzewo;
     std::ifstream plik(p_drzewo);
@@ -107,7 +74,7 @@ std::map<int, Wezel> wczytaj_drzewo(const std::string& p_drzewo) {
 }
 
 
-
+//Load data from dane file
 std::vector<Zawodnik> wczytaj_zawodnikow(const std::string& p_dane) {
     std::vector<Zawodnik> zawodnicy;
     std::ifstream plik(p_dane);
@@ -129,7 +96,7 @@ std::vector<Zawodnik> wczytaj_zawodnikow(const std::string& p_dane) {
         int guard;
 
         
-        size_t commentIndex = linia.find('%'); //z geeksforgeeks 
+        size_t commentIndex = linia.find('%'); 
         if (commentIndex != std::string::npos) {
             linia = linia.substr(0, commentIndex);
             iss.str(linia);
@@ -137,7 +104,7 @@ std::vector<Zawodnik> wczytaj_zawodnikow(const std::string& p_dane) {
         }
 
         if (iss >> imie >> nazwisko >> control >> speed >> stamina >> kick >> guard) {
-            /*zawodnicy.push_back({ imie, nazwisko, control, speed, stamina, kick, guard });*/ //to mi nie dzia³a³o
+            
             Zawodnik nowyZawodnik;
             nowyZawodnik.imie = imie;
             nowyZawodnik.nazwisko = nazwisko;
@@ -158,7 +125,7 @@ std::vector<Zawodnik> wczytaj_zawodnikow(const std::string& p_dane) {
     return zawodnicy;
 }
 
-
+//Asign possition for player
 std::string przypisz_pozycje(const Zawodnik& zawodnik, const std::map<int, Wezel>& drzewo) {
     int id_wezla = 0;
     while (true) {
@@ -190,6 +157,8 @@ std::string przypisz_pozycje(const Zawodnik& zawodnik, const std::map<int, Wezel
         }
     }
 }
+
+//Create file
 void tworzenie_pliku(const std::vector<Zawodnik>& zawodnicy, const std::map<int, Wezel>& drzewo) {
     std::ofstream plik_wyjsciowy("pozycje_graczy.txt");
     for (const auto& i : zawodnicy) {
@@ -198,59 +167,4 @@ void tworzenie_pliku(const std::vector<Zawodnik>& zawodnicy, const std::map<int,
         plik_wyjsciowy << i.imie << " " << i.nazwisko << ": " << pozycja << std::endl; 
     }
 }
-
-
-//void tworzenie_pliku(const Zawodnik& zawodnicy, const std::map<int, Wezel>& drzewo, std::string& p_drzewo, std::string& p_dane) {
-//    std::ofstream plikWyjsciowy("pozycje_graczy.txt");
-//    for (auto& i : zawodnicy) {
-//        std::string pozycja = przypisz_pozycje(i, drzewo);
-//        std::cout << i.imie << " " << i.nazwisko << ": " << pozycja << std::endl; 
-//        plikWyjsciowy << i.imie << " " << i.nazwisko << ": " << pozycja << std::endl; 
-//    }
-//}
-
-//int wartosc(const std::string& umiejetnosc, const Zawodnik& zawodnik) {
-//    if (umiejetnosc == "Control") return zawodnik.control;
-//    else if (umiejetnosc == "Speed") return zawodnik.speed;
-//    else if (umiejetnosc == "Stamina") return zawodnik.stamina;
-//    else if (umiejetnosc == "Kick") return zawodnik.kick;
-//    else if (umiejetnosc == "Guard") return zawodnik.guard;
-//    return 0; 
-//}
-
-
-
-
-//std::string przypisz_pozycje(const Zawodnik& zawodnik, const std::map<int, Wezel>& drzewo) {
-//    int id_wezla = 0;
-//    std::string nastepny_krok;
-//    while (true) {
-//        const Wezel& w = drzewo.at(id_wezla);
-//        int wartosc_atrybutu = wartosc(w.umiejetnosc, zawodnik);
-//        bool przejscie = (w.warunek == '<=') ? (wartosc_atrybutu <= w.wartosc) : (wartosc_atrybutu > w.wartosc);
-//
-//        nastepny_krok = przejscie ? w.lewo : w.prawo;
-//
-//        std::stringstream ss(nastepny_krok);
-//        
-//
-//        if (ss >> id_wezla) {
-//            
-//        }
-//        else {
-//            break;
-//        }
-//
-//    }
-//    return nastepny_krok;
-//}
-
-//metoda w ktorej bedzie for i bedzie przechodzil po vector z zawodnikami i bedzie dla kazdego uruchamial przypisz pozycje 
-
-//wypisuje zawodnikow i pozycje do pliku
-
-//sprawdzaæ czy to dzia³a
-//poprawiæ vector 
-
-
 

@@ -1,33 +1,42 @@
-﻿#include "struct.h"
+﻿/**@file*/
+
+/*
+Player_role_generator
+*/
+
+//header file import 
+#include "struct.h"
 #include "function.h"
+
+//import library
 #include <iostream>
-//Zadanie polega na stworzeniu algorytmu który będzie przyporządkowywać zawodników do odpowiedniej pozycji na boisku. 
-//Zalozmy ze będziemy oceniać ich po 5 cechach. Na początku trzeba sobie rozpisać drzewo- bo w oparciu o taki algorytm to rozwiążemy.
-//Rozpisz dowolnie na podstawie tych 5 cech jak chciałbyś przyporządkowywać tych zawodników. 
+
+/** Main function managing
+* @param num number of initial parameters
+* @param params parameters
+*/
 int main(int num, char* params[])
 {
-    std::string p_drzewo;
-    std::string p_dane;
+    // Variables for storing paths to the data files
+    std::string p_drzewo; ///< hold path to drzewo.txt file
+    std::string p_dane; ///< hold path to dane.txt file
 
+    // Attempt to retrieve the file paths from provided parameters
      if (!pobieranie_parametrow(num, params, p_drzewo, p_dane)) {
         std::cout << "pobieranie parametrow sie nie powiodlo\n";
         return 0;
 
     }
 
+     // Load the tree structure from the 'drzewo' file
      auto drzewo = wczytaj_drzewo(p_drzewo); 
+
+     // Load player data from the 'dane' file
      auto zawodnicy = wczytaj_zawodnikow(p_dane);
 
-     /*for (auto i : drzewo) {
-         std::cout << i.first << "\t" << i.second.id << "\n";
-
-     }*/
-
-     for (const auto& i : zawodnicy) {
-         std::string pozycja = przypisz_pozycje(i, drzewo);
-         std::cout << i.imie << " " << i.nazwisko << ": " << pozycja << std::endl;
-     }
+     // Create the output file with assigned player roles
      tworzenie_pliku(zawodnicy, drzewo);
+
      return 0;
 }
 
