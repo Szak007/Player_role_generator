@@ -23,7 +23,7 @@ int main(int num, char* params[])
 
     // Attempt to retrieve the file paths from provided parameters
      if (!download_parameters(num, params, f_tree, f_data)) {
-        std::cout << "pobieranie parametrow sie nie powiodlo\n";
+        std::cout << "parameter download failed\n";
         return 0;
 
     }
