@@ -1,4 +1,12 @@
+/**@file*/
+
+/*
+Player_role_generator
+*/
+
 #pragma once
+
+//import library
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -6,23 +14,23 @@
 #include <map>
 #include <vector>
 
-struct Zawodnik {
-	std::string imie="";
-	std::string nazwisko="";
-	std::vector <int> skills;
-	/*int control=0;
-	int speed=0;
-	int stamina=0;
-	int kick=0;
-	int guard=0;*/
+/** Structure that describe Player with name, surname and skills
+*/
+struct Player {
+	std::string name=""; ///<Name of player
+	std::string surname=""; ///<Surename of player
+	std::vector <int> skills; ///<Skill of player
 };
 
-struct Wezel {
-	int id = 0;
-	std::string umiejetnosc = "";
-	std::string warunek = ""; // <=
-	int wartosc = 0;
-	std::string lewo = "";
-	std::string prawo = "";
+/** Structure that describe node with id, skills, requirement, value, left, right
+*/
+
+struct Node {
+	int id = 0; ///<Id of node
+	std::string skill = ""; ///<Skill in node
+	std::string condition = ""; ///<Requirement of node
+	int value = 0; ///<Value of node
+	std::string left = ""; ///<Left turn in node
+	std::string right = ""; ///<Right turn in node
 
 };
