@@ -32,6 +32,10 @@ The **Player Role Generator** is a C++ application designed to randomly assign r
    ```bash
    ./player_role_generator
    ```
+4. Run the program with the required parameters:
+   ```bash
+   ./player_role_generator -t tree.txt -d data.txt
+   ```
 
 ## Project Structure
 
